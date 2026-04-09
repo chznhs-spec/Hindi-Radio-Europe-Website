@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hindi Radio Europe | Live Stream</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Base Reset & Variables */
+        :root {
+            --primary-color: #FF9933; /* Saffron Orange */
+            --bg-dark: #121212;
+            --section-bg: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-text {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-text h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Radio Player Container */
+        .player-container {
+            width: 100%;
+            max-width: 768px;
+            background: var(--section-bg);
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .player-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .player-container iframe {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Shows Section */
+        .shows-section {
+            width: 100%;
+            background: var(--section-bg);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .shows-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .show-card {
+            background: #2a2a2a;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .show-card h4 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .show-card .host {
+            font-size: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .show-card p {
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+
+        .show-card .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Social Media Section */
+        .social-section {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .social-section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .btn-ig {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+        }
+
+        .btn-ig:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #0a0a0a;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .hero-text h2 { font-size: 1.6rem; }
+            .btn { display: block; margin: 10px auto; max-width: 250px; }
+            .shows-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Hindi Radio Europe</h1>
+    </header>
+
+    <main>
+        <div class="hero-text">
+            <h2>The Freshest Hits from New Delhi</h2>
+            <p>Your ultimate connection to the vibrant sounds of India, broadcasting straight to Europe. Tune in for an unforgettable musical journey featuring the latest Bollywood chart-toppers, timeless classics, and the most infectious beats 24/7.</p>
+        </div>
+
+        <div class="player-container">
+            <iframe src="https://zeno.fm/player/hindi-radio-europe" height="300" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+        <div class="shows-section">
+            <h3>Featured Shows</h3>
+            <div class="show-card">
+                <h4>Chicken Tika Masala</h4>
+                <div class="host">with Raj Kumari</div>
+                <p>We broadcast when we broadcast it! <br>For the exact <span class="highlight">broadcast times for CTM</span>, make sure to follow us and check our updates on Instagram.</p>
+                <p><em>Missed the live stream? Don't worry, we replay recordings often!</em></p>
+            </div>
+        </div>
+
+        <div class="social-section">
+            <p>Keep up with our schedule and stay connected!</p>
+            <a href="https://www.instagram.com/hindi_radio_europe?igsh=YmR5ZXFpYWhoMHFs&utm_source=qr" target="_blank" class="btn btn-ig">
+                <i class="fab fa-instagram"></i> Follow us on Instagram
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Hindi Radio Europe. All rights reserved.</p>
+        <p>Alternative link: <a href="https://zeno.fm/radio/hindi-radio-europe/" target="_blank">Listen directly on Zeno.fm</a></p>
+    </footer>
+
+</body>
+</html>
