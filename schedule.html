@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule | Hindi Radio Europe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1><a href="index.html" style="color:inherit; text-decoration:none;">Hindi Radio Europe</a></h1>
+    </header>
+
+    <main>
+        <div class="section-card">
+            <h3>Full Broadcasting Schedule</h3>
+            <p style="text-align:center; margin-bottom: 2rem;">All times are automatically converted to your local time zone.</p>
+            
+            <div id="all-shows-container">
+                <p style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> Loading schedule...</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="index.html" class="btn" style="background: #2a2a2a; color: var(--primary-color); border: 2px solid var(--primary-color);"><i class="fas fa-arrow-left"></i> Back to Live Stream</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Hindi Radio Europe. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const API_KEY = 'AIzaSyBs6mioQwy7OwRY2AqTpjp9IQmj33Rh57g'; 
+        const CALENDAR_ID = 'hindiradioeurope@gmail.com'; 
+
+        async function fetchAllShows() {
+            const container = document.getElementById('all-shows-container');
+            const timeMin = new Date().toISOString(); 
+            const url = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&timeMin=${timeMin}&singleEvents=true&orderBy=startTime&maxResults=15`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                container.innerHTML = ''; 
+
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(event => {
+                        let title = event.summary || 'Untitled Show';
+                        
+                        // Robustní zpracování hashtagů i zde
+                        let tagHtml = '';
+                        if (/#\s*live/i.test(title)) {
+                            tagHtml = '<span class="tag tag-live">LIVE</span>';
+                            title = title.replace(/#\s*live/gi, '');
+                        } else if (/#\s*replay/i.test(title)) {
+                            tagHtml = '<span class="tag tag-replay">REPLAY</span>';
+                            title = title.replace(/#\s*replay/gi, '');
+                        }
+                        title = title.trim().replace(/\s+/g, ' ');
+
+                        const startDate = new Date(event.start.dateTime || event.start.date);
+                        const timeOptions = { weekday: 'long', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                        const formattedTime = startDate.toLocaleDateString('en-GB', timeOptions);
+
+                        const showCard = document.createElement('div');
+                        showCard.className = 'show-card';
+                        showCard.style.marginBottom = '1.5rem';
+                        
+                        // Přidán popisek ${event.description ...} na konec šablony události
+                        showCard.innerHTML = `
+                            <h4>${title} ${tagHtml}</h4>
+                            <span class="show-time"><i class="far fa-clock"></i> ${formattedTime}</span>
+                            ${event.description ? `<p style="margin-top: 0.5rem; font-size: 0.95rem;">${event.description}</p>` : ''}
+                        `;
+                        container.appendChild(showCard);
+                    });
+                } else {
+                    container.innerHTML = `<p style="text-align:center;">No upcoming shows scheduled. Stay tuned!</p>`;
+                }
+            } catch (error) {
+                container.innerHTML = `<p style="text-align:center;">Error loading schedule.</p>`;
+                console.error(error);
+            }
+        }
+
+        fetchAllShows();
+    </script>
+</body>
+</html>
