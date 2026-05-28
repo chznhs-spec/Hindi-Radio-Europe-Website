@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Můj Soundboard s funkcí STOP</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column; /* Tlačítka pod sebou (STOP navrchu) */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Hlavní kontejner */
+        .wrapper {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Velké STOP tlačítko */
+        .btn-stop {
+            width: 100%;
+            height: 80px;
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: #dc3545; /* Ostře červená */
+            color: white;
+            border: 3px solid #ff6b6b;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+            transition: transform 0.1s, filter 0.2s;
+        }
+
+        .soundboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* Styl pro hrací tlačítka */
+        .btn {
+            height: 150px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            transition: transform 0.1s, filter 0.2s;
+        }
+
+        /* Efekty při stisku */
+        .btn:active, .btn-stop:active {
+            transform: scale(0.97);
+        }
+
+        .btn:hover, .btn-stop:hover {
+            filter: brightness(1.2);
+        }
+
+        /* Barevné rozdělení */
+        .color-1 { background-color: #c0392b; } 
+        .color-2 { background-color: #2980b9; } 
+        .color-3 { background-color: #27ae60; } 
+        .color-4 { background-color: #f39c12; } 
+        .color-5 { background-color: #8e44ad; } 
+        .color-6 { background-color: #d35400; } 
+
+        /* Mobilní verze */
+        @media (max-width: 600px) {
+            .soundboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .btn { height: 120px; font-size: 18px; }
+            .btn-stop { height: 70px; font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <button class="btn-stop" onclick="stopAllSounds()">⏱ STOP VŠE</button>
+
+        <div class="soundboard">
+            <button class="btn color-1" onclick="playSound('zvuky/jingle1.mp3')">Jingle 1</button>
+            <button class="btn color-2" onclick="playSound('zvuky/jingle2.mp3')">Jingle 2</button>
+            <button class="btn color-3" onclick="playSound('zvuky/jingle3.mp3')">Jingle 3</button>
+            <button class="btn color-4" onclick="playSound('zvuky/hiddeninsanity.mp3')">Hidden Insanity</button>
+            <button class="btn color-5" onclick="playSound('zvuky/ipl.mp3')">Indian Premium League</button>
+            <button class="btn color-6" onclick="playSound('zvuky/jingle6.mp3')">Fail</button>
+        </div>
+    </div>
+
+    <script>
+        // Pole, do kterého si budeme ukládat všechny spuštěné zvuky
+        let playingAudioFiles = [];
+
+        function playSound(audioUrl) {
+            const audio = new Audio(audioUrl);
+            
+            // Přidáme zvuk do seznamu aktivních
+            playingAudioFiles.push(audio);
+            
+            audio.currentTime = 0;
+            audio.play().catch(error => {
+                console.log("Chyba přehrávání:", error);
+            });
+
+            // Jakmile zvuk dohraje sám, smažeme ho ze seznamu, ať nám nežere paměť
+            audio.onended = function() {
+                playingAudioFiles = playingAudioFiles.filter(item => item !== audio);
+            };
+        }
+
+        // Funkce, která projde všechny hrající zvuky, stopne je a vyčistí pole
+        function stopAllSounds() {
+            playingAudioFiles.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+            playingAudioFiles = []; // Vyčistit seznam
+        }
+    </script>
+
+</body>
+</html>
